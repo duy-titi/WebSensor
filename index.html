@@ -26,9 +26,10 @@
 	</table>	
 	
 	<script>
-		console.log('run script');
+		console.log('window = ' + window.toString());
 		if ('LinearAccelerationSensor' in window && 'Gyroscope' in window) {
-		  document.getElementById('moApi').innerHTML = 'Generic Sensor API';
+			console.log('LinearAccelerationSensor & Gyroscope');
+		  	document.getElementById('moApi').innerHTML = 'Generic Sensor API';
 		  
 		  let lastReadingTimestamp;
 		  let accelerometer = new LinearAccelerationSensor();
@@ -56,6 +57,7 @@
 		  gyroscope.start();
 		  
 		} else if ('DeviceMotionEvent' in window) {
+			console.log('DeviceMotionEvent');
 		  document.getElementById('moApi').innerHTML = 'Device Motion API';
 		  
 		  var onDeviceMotion = function (eventData) {
@@ -67,7 +69,8 @@
 		  
 		  window.addEventListener('devicemotion', onDeviceMotion, false);
 		} else {
-		  document.getElementById('moApi').innerHTML = 'No Accelerometer & Gyroscope API available';
+			console.log('No Accelerometer & Gyroscope API available');
+		  	document.getElementById('moApi').innerHTML = 'No Accelerometer & Gyroscope API available';
 		}
 
 		function accelerationHandler(acceleration, targetId) {

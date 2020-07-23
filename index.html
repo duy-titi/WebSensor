@@ -1,99 +1,74 @@
 <html>
-<head>
+
+<head>	
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>	
+	<link rel="stylesheet" href="css/styles.css"></link>	
 </head>
-<body>
-	<table>
-	  <tr>
-		<td>API used</td>
-		<td id="moApi"></td>
-	  </tr>
-	  <tr>
-		<td>linear acceleration (excl. gravity)</td>
-		<td id="moAccel"></td>
-	  </tr>
-	  <tr>
-		<td>acceleration incl. gravity</td>
-		<td id="moAccelGrav"></td>
-	  </tr>
-	  <tr>
-		<td>rotation rate</td>
-		<td id="moRotation"></td>
-	  </tr>
-	  <tr>
-		<td>interval (ms)</td>
-		<td id="moInterval"></td>
-	  </tr>
-	</table>	
-	
+
+<body oncontextmenu="return false">
+	<div id="landing-page" class="landing-page" style="display: none;">
+		<div class='title center'> Bring Your Kids&rsquo; Toys To Life </div>
+		<div class="toy_logo center">
+			<img class="center" src="images/toy_bg.png"/>
+			<img id="toy-image" class="center" style="height:12%; transform: translate(-50%, 50%);">
+		</div>
+		
+		<div class="applaydu-desc center">
+			That Surprise Will Come To Life Thanks To
+		</div>
+		<img class="center" style="height: 8%; margin-bottom: 2vh" src="images/logo_appplaydu_big.png" />
+		<img id="store-img-landing" class="center" style="height: 6%;"/>
+		<div id="countdown-text" class="center"> You will be automatically redirected in 5 seconds </div>
+		<div class="bottom">
+			<div style="position: fixed;color: #929292;text-align: left;bottom: 2px; left: 10px;">
+				<span style="font-size: 10px;">v.108</span>
+			</div>
+			<div style="position: fixed;color: #929292;text-align: right;bottom: 5px; width: 100%;right: 10px;">
+				<span style="font-weight:bold; font-size: 2.5vw;">Privacy Policy | Terms</span>
+			</div>
+		</div>
+	</div>
+
+	<div id="legal-disclaimer" class="legal-disclaimer full-screen">
+		<div id="legal-disclaimer-container" class="container">			
+			<div class="title"> Legal Disclaimer</div>
+			<div> Hello ! needs to collect your information in order to activate, into the game, the	toy you obtain through scanning the QR code. </div>
+			<div class="emphasize">
+				<div> If you agree, your information will be hashed and stored for one day maximum and then will be deleted.</div>
+				<div> If you disagree, No personal information will be collected from your device.</div>
+			</div>
+			<div> Dear children, please show this information to your parent or guardian in order to let them can decide. </div>
+			<div class="group-btn">
+				<div id="legal-disagree-btn"> DISAGREE </div>
+				<div id="legal-agree-btn"> AGREE </div>
+			</div>
+			
+		</div>
+		<div id="legal-policy">
+			<span style="font-size: 14px;">Privacy Policy | Terms</span>
+		</div>
+	</div>
+
+	<div id="landscape-popup" class="background-fullscreen" style="background-color:#FFFFFF; z-index: 999999; visibility: hidden;"> 
+		<div class="popup-fullscreen-container"> 
+			<img class="img-center" src="images/landscape.png" style="width: 50%;" />
+			<div> The website is not available for landscape mode. Please rotate the screen and try again!  </div>
+		</div>
+	</div>
 	<script>
-		console.log('window = ' + window.toString());
-		if ('LinearAccelerationSensor' in window && 'Gyroscope' in window) {
-			console.log('LinearAccelerationSensor & Gyroscope');
-		  	document.getElementById('moApi').innerHTML = 'Generic Sensor API';
-		  
-		  let lastReadingTimestamp;
-		  let accelerometer = new LinearAccelerationSensor();
-		  accelerometer.addEventListener('reading', e => {
-			if (lastReadingTimestamp) {
-			  intervalHandler(Math.round(accelerometer.timestamp - lastReadingTimestamp));
-			}
-			lastReadingTimestamp = accelerometer.timestamp
-			accelerationHandler(accelerometer, 'moAccel');
-		  });
-		  accelerometer.start();
-		  
-		  if ('GravitySensor' in window) {
-			let gravity = new GravitySensor();
-			gravity.addEventListener('reading', e => accelerationHandler(gravity, 'moAccelGrav'));
-			gravity.start();
-		  }
-		  
-		  let gyroscope = new Gyroscope();
-		  gyroscope.addEventListener('reading', e => rotationHandler({
-			alpha: gyroscope.x,
-			beta: gyroscope.y,
-			gamma: gyroscope.z
-		  }));
-		  gyroscope.start();
-		  
-		} else if ('DeviceMotionEvent' in window) {
-			console.log('DeviceMotionEvent');
-		  document.getElementById('moApi').innerHTML = 'Device Motion API';
-		  
-		  var onDeviceMotion = function (eventData) {
-			accelerationHandler(eventData.acceleration, 'moAccel');
-			accelerationHandler(eventData.accelerationIncludingGravity, 'moAccelGrav');
-			rotationHandler(eventData.rotationRate);
-			intervalHandler(eventData.interval);
-		  }
-		  
-		  window.addEventListener('devicemotion', onDeviceMotion, false);
-		} else {
-			console.log('No Accelerometer & Gyroscope API available');
-		  	document.getElementById('moApi').innerHTML = 'No Accelerometer & Gyroscope API available';
+		document.getElementById('legal-disagree-btn').addEventListener("click", disAgree);
+		document.getElementById('legal-agree-btn').addEventListener("click", agree);
+		
+		function disAgree() {
+			alert('disagree');
+			closeLegalDisclaimer(false);
 		}
 
-		function accelerationHandler(acceleration, targetId) {
-		  var info, xyz = "[X, Y, Z]";
-
-		  info = xyz.replace("X", acceleration.x && acceleration.x.toFixed(3));
-		  info = info.replace("Y", acceleration.y && acceleration.y.toFixed(3));
-		  info = info.replace("Z", acceleration.z && acceleration.z.toFixed(3));
-		  document.getElementById(targetId).innerHTML = info;
-		}
-
-		function rotationHandler(rotation) {
-		  var info, xyz = "[X, Y, Z]";
-
-		  info = xyz.replace("X", rotation.alpha && rotation.alpha.toFixed(3));
-		  info = info.replace("Y", rotation.beta && rotation.beta.toFixed(3));
-		  info = info.replace("Z", rotation.gamma && rotation.gamma.toFixed(3));
-		  document.getElementById("moRotation").innerHTML = info;
-		}
-
-		function intervalHandler(interval) {
-		  document.getElementById("moInterval").innerHTML = interval;
+		function agree() {
+			alert('agree');
+			//sendFingerPrint(window.identID, window.toyID, window.visitID);
 		}
 	</script>
-<body>
+</body>
+
 </html>

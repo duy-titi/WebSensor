@@ -16,7 +16,7 @@
 			// load the posenet model
 			const net = await posenet.load();
 			const pose = await net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride);
-			console.log('pose = ' + pose);
+			console.log('pose = ' + JSON.stringify(pose));
 		}
 
 		window.onload = function () {

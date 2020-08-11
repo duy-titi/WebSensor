@@ -7,6 +7,7 @@
 	</head>
   <body>    
 	<img id='img-person' src='images/test.jpg'/>
+	<img id='img-detected'/>
     <script type="text/javascript">
 		async function detectPose() {
 			const imageScaleFactor = 0.50;
@@ -17,10 +18,31 @@
 			const net = await posenet.load();
 			const pose = await net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride);
 			console.log('pose = ' + JSON.stringify(pose));
+
+			return JSON.stringify(pose);
 		}
 
 		window.onload = function () {
-			detectPose();
+			let poseData = detectPose();
+
+			let canvas = document.createElement('canvas');
+			let ctx = canvas.getContext('2d');
+
+			//draw img as background
+			let img = document.getElementById('img-person');
+			ctx.drawImage(img, 0, 0);
+
+			//draw pose data
+			ctx.fillStyle = 'green';
+			let keypoints = poseData['keypoints'];
+			let keypoint;
+			for(keypoint in keypoints) {
+				console.log("keypoint['position'].x = " + keypoint['position'].x + "keypoint['position'].y = " + keypoint['position'].y);
+				ctx.fillRect(keypoint['position'].x, keypoint['position'].y, 4, 4);
+			}
+
+			//display result to screen
+			document.getElementById('img-detected').src = canvas;
 		}
     </script>
   </body>

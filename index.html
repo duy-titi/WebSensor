@@ -37,12 +37,11 @@
 			//draw pose data
 			ctx.fillStyle = 'green';
 			let keypoints = poseData['keypoints'];
-			console.log('keypoints = ' + keypoints);
+			const R = 20;
 			for(let i = 0 ; i < keypoints.length; i ++) {
 				let keypoint = keypoints[i];
-				console.log("keypoint = " + keypoint);
 				console.log('keypoint.position.x = ' + keypoint.position.x + ' keypoint.position.y = ' + keypoint.position.y);
-				ctx.fillRect(keypoint.position.x, keypoint.position.y, 40, 40);
+				ctx.fillRect(keypoint.position.x - R/2, keypoint.position.y - R/2, R, R);
 			}
 
 			//display result to screen

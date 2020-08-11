@@ -1,20 +1,27 @@
 <html>
-  <body>
-    <!-- Load TensorFlow.js -->
-    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
-    <!-- Load Posenet -->
-    <script src="https://unpkg.com/@tensorflow-models/posenet">
-    </script>
+	<head>
+		<!-- Load TensorFlow.js -->
+		<script src="https://unpkg.com/@tensorflow/tfjs"></script>
+		<!-- Load Posenet -->
+		<script src="https://unpkg.com/@tensorflow-models/posenet"></script>
+	</head>
+  <body>    
 	<img id='img-person' src='images/test.jpg'/>
     <script type="text/javascript">
-		const imageScaleFactor = 0.50;
-		const flipHorizontal = false;
-		const outputStride = 16;
-		const imageElement = document.getElementById('img-person');
-		// load the posenet model
-		const net = await posenet.load();
-		const pose = await net.estimateSinglePose(imageElement, scaleFactor, flipHorizontal, outputStride);
-		console.log('pose = ' + pose);
+		async detectPose() {
+			const imageScaleFactor = 0.50;
+			const flipHorizontal = false;
+			const outputStride = 16;
+			const imageElement = document.getElementById('img-person');
+			// load the posenet model
+			const net = await posenet.load();
+			const pose = await net.estimateSinglePose(imageElement, scaleFactor, flipHorizontal, outputStride);
+			console.log('pose = ' + pose);
+		}
+
+		window.onload = function () {
+			detectPose();
+		}
     </script>
   </body>
 </html>

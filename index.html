@@ -19,7 +19,7 @@
 			const pose = await net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride);
 			console.log('pose = ' + JSON.stringify(pose));
 
-			return JSON.stringify(pose);
+			return pose;
 		}
 
 		window.onload = function () {

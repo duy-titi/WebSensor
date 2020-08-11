@@ -26,10 +26,12 @@
 			let poseData = detectPose();
 
 			let canvas = document.createElement('canvas');
-			let ctx = canvas.getContext('2d');
+			let ctx = canvas.getContext('2d');			
 
 			//draw img as background
 			let img = document.getElementById('img-person');
+			canvas.width = img.width;
+			canvas.height = img.height;
 			ctx.drawImage(img, 0, 0);
 
 			//draw pose data

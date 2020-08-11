@@ -37,6 +37,7 @@
 			//draw pose data
 			ctx.fillStyle = 'green';
 			let keypoints = poseData['keypoints'];
+			console.log('keypoints = ' + keypoints);
 			let keypoint;
 			for(keypoint in keypoints) {
 				console.log("keypoint['position'].x = " + keypoint['position'].x + "keypoint['position'].y = " + keypoint['position'].y);

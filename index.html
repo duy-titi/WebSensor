@@ -1,74 +1,20 @@
 <html>
-
-<head>	
-	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>	
-	<link rel="stylesheet" href="css/styles.css"></link>	
-</head>
-
-<body oncontextmenu="return false">
-	<div id="landing-page" class="landing-page" style="display: none;">
-		<div class='title center'> Bring Your Kids&rsquo; Toys To Life </div>
-		<div class="toy_logo center">
-			<img class="center" src="images/toy_bg.png"/>
-			<img id="toy-image" class="center" style="height:12%; transform: translate(-50%, 50%);">
-		</div>
-		
-		<div class="applaydu-desc center">
-			That Surprise Will Come To Life Thanks To
-		</div>
-		<img class="center" style="height: 8%; margin-bottom: 2vh" src="images/logo_appplaydu_big.png" />
-		<img id="store-img-landing" class="center" style="height: 6%;"/>
-		<div id="countdown-text" class="center"> You will be automatically redirected in 5 seconds </div>
-		<div class="bottom">
-			<div style="position: fixed;color: #929292;text-align: left;bottom: 2px; left: 10px;">
-				<span style="font-size: 10px;">v.108</span>
-			</div>
-			<div style="position: fixed;color: #929292;text-align: right;bottom: 5px; width: 100%;right: 10px;">
-				<span style="font-weight:bold; font-size: 2.5vw;">Privacy Policy | Terms</span>
-			</div>
-		</div>
-	</div>
-
-	<div id="legal-disclaimer" class="legal-disclaimer full-screen">
-		<div id="legal-disclaimer-container" class="container">			
-			<div class="title"> Legal Disclaimer</div>
-			<div> Hello ! needs to collect your information in order to activate, into the game, the	toy you obtain through scanning the QR code. </div>
-			<div class="emphasize">
-				<div> If you agree, your information will be hashed and stored for one day maximum and then will be deleted.</div>
-				<div> If you disagree, No personal information will be collected from your device.</div>
-			</div>
-			<div> Dear children, please show this information to your parent or guardian in order to let them can decide. </div>
-			<div class="group-btn">
-				<div id="legal-disagree-btn"> DISAGREE </div>
-				<div id="legal-agree-btn"> AGREE </div>
-			</div>
-			
-		</div>
-		<div id="legal-policy">
-			<span style="font-size: 14px;">Privacy Policy | Terms</span>
-		</div>
-	</div>
-
-	<div id="landscape-popup" class="background-fullscreen" style="background-color:#FFFFFF; z-index: 999999; visibility: hidden;"> 
-		<div class="popup-fullscreen-container"> 
-			<img class="img-center" src="images/landscape.png" style="width: 50%;" />
-			<div> The website is not available for landscape mode. Please rotate the screen and try again!  </div>
-		</div>
-	</div>
-	<script>
-		document.getElementById('legal-disagree-btn').addEventListener("click", disAgree);
-		document.getElementById('legal-agree-btn').addEventListener("click", agree);
-		
-		function disAgree() {
-			alert('disagree');
-			closeLegalDisclaimer(false);
-		}
-
-		function agree() {
-			alert('agree');
-			//sendFingerPrint(window.identID, window.toyID, window.visitID);
-		}
-	</script>
-</body>
-
+  <body>
+    <!-- Load TensorFlow.js -->
+    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
+    <!-- Load Posenet -->
+    <script src="https://unpkg.com/@tensorflow-models/posenet">
+    </script>
+	<img id='img-person' src='images/test.jpg'/>
+    <script type="text/javascript">
+		const imageScaleFactor = 0.50;
+		const flipHorizontal = false;
+		const outputStride = 16;
+		const imageElement = document.getElementById('img-person');
+		// load the posenet model
+		const net = await posenet.load();
+		const pose = await net.estimateSinglePose(imageElement, scaleFactor, flipHorizontal, outputStride);
+		console.log('pose = ' + pose);
+    </script>
+  </body>
 </html>

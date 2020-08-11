@@ -19,7 +19,7 @@
 			const pose = await net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride);
 			console.log('pose = ' + JSON.stringify(pose));
 
-			return JSON.stringify(pose);
+			return pose;
 		}
 
 		window.onload = async () => {
@@ -40,8 +40,8 @@
 			console.log('keypoints = ' + keypoints);
 			let keypoint;
 			for(keypoint in keypoints) {
-				console.log("keypoint['position'].x = " + keypoint['position'].x + "keypoint['position'].y = " + keypoint['position'].y);
-				ctx.fillRect(keypoint['position'].x, keypoint['position'].y, 4, 4);
+				console.log("keypoint['position']['x'] = " + keypoint['position']['x'] + "keypoint['position']['y'] = " + keypoint['position']['y']);
+				ctx.fillRect(keypoint['position']['x'], keypoint['position']['y'], 4, 4);
 			}
 
 			//display result to screen

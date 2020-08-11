@@ -15,7 +15,7 @@
 			const imageElement = document.getElementById('img-person');
 			// load the posenet model
 			const net = await posenet.load();
-			const pose = await net.estimateSinglePose(imageElement, scaleFactor, flipHorizontal, outputStride);
+			const pose = await net.estimateSinglePose(imageElement, imageScaleFactor, flipHorizontal, outputStride);
 			console.log('pose = ' + pose);
 		}
 

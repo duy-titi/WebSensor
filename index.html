@@ -42,7 +42,8 @@
 			}
 
 			//display result to screen
-			document.getElementById('img-detected').src = canvas;
+			let processedImg = document.getElementById('img-detected');
+			processedImg.src = canvas.toDataURL();
 		}
     </script>
   </body>

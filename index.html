@@ -22,8 +22,8 @@
 			return pose;
 		}
 
-		window.onload = function () {
-			let poseData = detectPose();
+		window.onload = async () => {
+			let poseData = await detectPose();
 
 			let canvas = document.createElement('canvas');
 			let ctx = canvas.getContext('2d');			
